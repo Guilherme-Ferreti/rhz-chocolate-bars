@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\CocoaBatch;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateCocoaBatchesTable extends Migration
 {
@@ -16,8 +17,8 @@ class CreateCocoaBatchesTable extends Migration
         Schema::create('cocoa_batches', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->enum('provider', ['RZM Kakau', 'RZM Organic', 'RZM Foods Brazil']);
-            $table->enum('origin', [ 'Organic', 'Preprocessed']);
+            $table->enum('provider', CocoaBatch::PROVIDERS);
+            $table->enum('origin', CocoaBatch::ORIGINS);
             $table->timestamps();
         });
     }
