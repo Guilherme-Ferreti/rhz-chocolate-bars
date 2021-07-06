@@ -54,9 +54,7 @@ class CocoaBatchTest extends TestCase
 
         $response->assertOk();
         $response->assertExactJson($cocoa_batch);
-
-        unset($cocoa_batch['updated_at']);
-
+        
         $this->assertDatabaseHas('cocoa_batches', [
             'description' => $cocoa_batch['description'],
         ]);
