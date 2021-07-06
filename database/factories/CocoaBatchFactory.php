@@ -22,7 +22,7 @@ class CocoaBatchFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->words(8, true),
+            'description' => $this->faker->unique()->words(8, true),
             'provider' => CocoaBatch::PROVIDERS[array_rand(CocoaBatch::PROVIDERS)],
             'origin' => CocoaBatch::ORIGINS[array_rand(CocoaBatch::ORIGINS)],
         ];

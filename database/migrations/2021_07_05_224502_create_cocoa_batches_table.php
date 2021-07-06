@@ -16,7 +16,7 @@ class CreateCocoaBatchesTable extends Migration
     {
         Schema::create('cocoa_batches', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->string('description')->unique();
             $table->enum('provider', CocoaBatch::PROVIDERS);
             $table->enum('origin', CocoaBatch::ORIGINS);
             $table->timestamps();
