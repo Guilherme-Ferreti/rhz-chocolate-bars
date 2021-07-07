@@ -17,6 +17,7 @@ class ChocolateBarResource extends JsonResource
         return [
             'id' => $this->id,
             'weight' => $this->weight,
+            'code' => $this->code,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'cocoa_batches' => CocoaBatchResource::collection($this->whenLoaded('cocoa_batches')),
