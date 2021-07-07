@@ -9,8 +9,16 @@ class CocoaBatch extends Model
 {
     use HasFactory;
 
-    const PROVIDERS = ['RZM Kakau', 'RZM Organic', 'RZM Foods Brazil'];
-    const ORIGINS = ['Organic', 'Preprocessed'];
+    const PROVIDERS = [
+        'rzm_kakau' => 'RZM Kakau', 
+        'rzm_organic' => 'RZM Organic', 
+        'rzm_foods_brasil' => 'RZM Foods Brazil'
+    ];
+    
+    const ORIGINS = [
+        'organic' => 'Organic', 
+        'preprocessed' => 'Preprocessed'
+    ];
 
     protected $fillable = ['description', 'provider', 'origin'];
 }
