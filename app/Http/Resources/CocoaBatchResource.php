@@ -20,7 +20,10 @@ class CocoaBatchResource extends JsonResource
             'provider' => $this->provider,
             'origin' => $this->origin,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
+            'pivot' => $this->whenPivotLoaded('chocolate_bar_cocoa_batch', function () {
+                return $this->pivot;
+            }),
         ];
     }
 }
