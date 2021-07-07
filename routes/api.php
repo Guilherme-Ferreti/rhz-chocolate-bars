@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CocoaBatchController;
+use App\Http\Controllers\ChocolateBarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,4 @@ use App\Http\Controllers\CocoaBatchController;
 */
 
 Route::apiResource('cocoa-batches', CocoaBatchController::class);
+Route::apiResource('chocolate-bars', ChocolateBarController::class);
