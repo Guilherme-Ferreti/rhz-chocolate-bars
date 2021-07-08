@@ -21,6 +21,7 @@ class CocoaBatchResource extends JsonResource
             'origin' => $this->origin,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'chocolate_bars' => ChocolateBarResource::collection($this->whenLoaded('chocolate_bars')),
             'pivot' => $this->whenPivotLoaded('chocolate_bar_cocoa_batch', function () {
                 return $this->pivot;
             }),

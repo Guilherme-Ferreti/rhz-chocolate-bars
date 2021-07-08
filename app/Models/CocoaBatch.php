@@ -21,4 +21,9 @@ class CocoaBatch extends Model
     ];
 
     protected $fillable = ['description', 'provider', 'origin'];
+
+    public function chocolate_bars()
+    {
+        return $this->belongsToMany(ChocolateBar::class)->withPivot('grams')->withTimestamps();
+    }
 }

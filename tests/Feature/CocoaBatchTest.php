@@ -19,17 +19,17 @@ class CocoaBatchTest extends TestCase
         $response = $this->get(route('cocoa-batches.index'));
 
         $response->assertOk();
-        $response->assertExactJson($cocoa_batches);
+        $response->assertJson(['data' => $cocoa_batches]);
     }
 
     public function test_a_cocoa_batch_can_be_retrieved()
     {
-        $cocoa_batch = CocoaBatch::factory()->create();
+        $cocoa_batch = CocoaBatch::factory()->create()->toArray();
 
-        $response = $this->get(route('cocoa-batches.show', $cocoa_batch));
+        $response = $this->get(route('cocoa-batches.show', $cocoa_batch['id']));
 
         $response->assertOk();
-        $response->assertExactJson($cocoa_batch->toArray());
+        $response->assertJson(['data' => $cocoa_batch]);
     }
 
     public function test_a_cocoa_batch_can_be_created()
@@ -39,7 +39,7 @@ class CocoaBatchTest extends TestCase
         $response = $this->postJson(route('cocoa-batches.store'), $cocoa_batch);
 
         $response->assertCreated();
-        $response->assertJson($cocoa_batch);
+        $response->assertJson(['data' => $cocoa_batch]);
 
         $this->assertDatabaseCount('cocoa_batches', 1);
     } 
@@ -53,7 +53,7 @@ class CocoaBatchTest extends TestCase
         $response = $this->putJson(route('cocoa-batches.update', $cocoa_batch['id']), $cocoa_batch);
 
         $response->assertOk();
-        $response->assertExactJson($cocoa_batch);
+        $response->assertJson(['data' => $cocoa_batch]);
         
         $this->assertDatabaseHas('cocoa_batches', [
             'description' => $cocoa_batch['description'],
