@@ -38,13 +38,7 @@ class ChocolateBarTest extends TestCase
 
     public function test_a_chocolate_bar_can_be_created()
     {
-        $cocoa_batches = CocoaBatch::factory()
-                    ->count(2)
-                    ->state(new Sequence(
-                        ['origin' => CocoaBatch::ORIGINS['organic']],
-                        ['origin' => CocoaBatch::ORIGINS['preprocessed']],
-                    ))
-                    ->create();
+        $cocoa_batches = $this->create_cocoa_batches();
 
         $payload = [
             'weight' => 100,
@@ -65,13 +59,7 @@ class ChocolateBarTest extends TestCase
     {
         $this->seed();
 
-        $cocoa_batches = CocoaBatch::factory()
-                    ->count(2)
-                    ->state(new Sequence(
-                        ['origin' => CocoaBatch::ORIGINS['organic']],
-                        ['origin' => CocoaBatch::ORIGINS['preprocessed']],
-                    ))
-                    ->create();
+        $cocoa_batches = $this->create_cocoa_batches();
 
         $payload = [
             'weight' => 100,
@@ -102,5 +90,16 @@ class ChocolateBarTest extends TestCase
         $response->assertNoContent();
 
         $this->assertDeleted('chocolate_bars', $chocolate_bar->toArray());
+    }
+
+    private function create_cocoa_batches()
+    {
+        return CocoaBatch::factory()
+                        ->count(2)
+                        ->state(new Sequence(
+                            ['origin' => CocoaBatch::ORIGINS['organic']],
+                            ['origin' => CocoaBatch::ORIGINS['preprocessed']],
+                        ))
+                        ->create();
     }
 }
