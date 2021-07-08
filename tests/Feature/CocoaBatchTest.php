@@ -14,7 +14,9 @@ class CocoaBatchTest extends TestCase
 
     public function test_all_cocoa_batches_can_be_retrieved()
     {
-        $cocoa_batches = CocoaBatch::factory(10)->create()->toArray();
+        $this->seed();
+
+        $cocoa_batches = CocoaBatch::with('chocolate_bars')->take(15)->get()->toArray();
 
         $response = $this->get(route('cocoa-batches.index'));
 
@@ -24,7 +26,9 @@ class CocoaBatchTest extends TestCase
 
     public function test_a_cocoa_batch_can_be_retrieved()
     {
-        $cocoa_batch = CocoaBatch::factory()->create()->toArray();
+        $this->seed();
+
+        $cocoa_batch = CocoaBatch::with('chocolate_bars')->inRandomOrder()->first()->toArray();
 
         $response = $this->get(route('cocoa-batches.show', $cocoa_batch['id']));
 
@@ -46,7 +50,9 @@ class CocoaBatchTest extends TestCase
 
     public function test_a_cocoa_batch_can_be_updated()
     {
-        $cocoa_batch = CocoaBatch::factory()->create()->toArray();
+        $this->seed();
+
+        $cocoa_batch = CocoaBatch::inRandomOrder()->first()->toArray();
 
         $cocoa_batch['description'] = 'Updated description';
 
@@ -62,7 +68,9 @@ class CocoaBatchTest extends TestCase
 
     public function test_a_cocoa_batch_can_be_deleted()
     {
-        $cocoa_batch = CocoaBatch::factory()->create();
+        $this->seed();
+
+        $cocoa_batch = CocoaBatch::inRandomOrder()->first();
 
         $response = $this->delete(route('cocoa-batches.destroy', $cocoa_batch));
 

@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\CocoaBatch;
 use App\Models\ChocolateBar;
-use Database\Seeders\ChocolateBarSeeder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -16,7 +15,7 @@ class ChocolateBarTest extends TestCase
 
     public function test_all_chocolate_bars_can_be_retrieved()
     {
-        $this->seed(ChocolateBarSeeder::class);
+        $this->seed();
 
         $response = $this->get(route('chocolate-bars.index'));
         
@@ -27,9 +26,9 @@ class ChocolateBarTest extends TestCase
 
     public function test_a_chocolate_bar_can_be_retrieved()
     {
-        $this->seed(ChocolateBarSeeder::class);
+        $this->seed();
 
-        $chocolate_bar = ChocolateBar::with('cocoa_batches')->first()->toArray();
+        $chocolate_bar = ChocolateBar::with('cocoa_batches')->inRandomOrder()->first()->toArray();
 
         $response = $this->get(route('chocolate-bars.show', $chocolate_bar['id']));
 
@@ -64,7 +63,7 @@ class ChocolateBarTest extends TestCase
 
     public function test_a_chocolate_bar_can_be_updated()
     {
-        $this->seed(ChocolateBarSeeder::class);
+        $this->seed();
 
         $cocoa_batches = CocoaBatch::factory()
                     ->count(2)
@@ -94,7 +93,7 @@ class ChocolateBarTest extends TestCase
 
     public function test_a_chocolate_bar_can_be_deleted()
     {
-        $this->seed(ChocolateBarSeeder::class);
+        $this->seed();
 
         $chocolate_bar = ChocolateBar::first();
 
@@ -102,6 +101,6 @@ class ChocolateBarTest extends TestCase
 
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing('chocolate_bars', $chocolate_bar->toArray());
+        $this->assertDeleted('chocolate_bars', $chocolate_bar->toArray());
     }
 }
