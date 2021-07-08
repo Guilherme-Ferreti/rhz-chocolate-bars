@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CocoaBatchController;
 use App\Http\Controllers\ChocolateBarController;
+use App\Http\Controllers\ConsultationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,5 @@ use App\Http\Controllers\ChocolateBarController;
 
 Route::apiResource('cocoa-batches', CocoaBatchController::class);
 Route::apiResource('chocolate-bars', ChocolateBarController::class);
+
+Route::get('/consultation/chocolate-bars/{code}', [ConsultationController::class, 'chocolate_bar']);
