@@ -7,14 +7,16 @@ use Illuminate\Contracts\Validation\Rule;
 
 class GramProportion implements Rule
 {
+    protected $max_grams;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(int $max_grams)
     {
-        //
+        $this->max_grams = $max_grams;
     }
 
     /**
@@ -46,14 +48,12 @@ class GramProportion implements Rule
             }
         }
 
-        $chocolate_bar_weight = (int) request('weight');
-
-        if ($organic_grams + $preprocessed_grams !== $chocolate_bar_weight) {
+        if ($organic_grams + $preprocessed_grams !== $this->max_grams) {
             return false;
         }
 
-        $organic_percentage = ($organic_grams * 100) / $chocolate_bar_weight;
-        $preprocessed_percentage = ($preprocessed_grams * 100) / $chocolate_bar_weight;
+        $organic_percentage = ($organic_grams * 100) / $this->max_grams;
+        $preprocessed_percentage = ($preprocessed_grams * 100) / $this->max_grams;
 
         if ($organic_percentage < 90 || $preprocessed_percentage > 10) {
             return false;

@@ -34,7 +34,7 @@ class ChocolateBarRequest extends FormRequest
             'weight' => ['required', 'integer', 'gt:0'],
             'code' => ['required', 'string', 'min:8', 'max:8', 'alpha_num', 'unique:chocolate_bars'],
             'cocoa_batches.*.id' => ['required', 'integer', 'exists:cocoa_batches'], 
-            'cocoa_batches' => ['required', 'array', new GramProportion()],
+            'cocoa_batches' => ['required', 'array', new GramProportion($this->weight)],
             'cocoa_batches.*.grams' => ['required', 'integer', 'gt:0'], 
         ];
     }
@@ -47,7 +47,7 @@ class ChocolateBarRequest extends FormRequest
                 'required', 'string', 'min:8', 'max:8', 'alpha_num', 
                 Rule::unique('chocolate_bars')->ignore($this->chocolate_bar->id),
             ],
-            'cocoa_batches' => ['required', 'array', new GramProportion()],
+            'cocoa_batches' => ['required', 'array', new GramProportion($this->weight)],
             'cocoa_batches.*.id' => ['required', 'integer', 'exists:cocoa_batches'], 
             'cocoa_batches.*.grams' => ['required', 'integer', 'gt:0'], 
         ];
