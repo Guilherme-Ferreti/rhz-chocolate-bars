@@ -34,3 +34,10 @@ Finally, create an API auth token. This token allow access to some application e
 
 ```php artisan api:create-auth-token --length=50```
 
+## Documentation
+
+API documentation can be accessed using the following link:
+https://rhz-chocolate-bars-api-docs.vercel.app/
+
+Database modeling documentation is also avaliable:
+https://drawsql.app/fallhealer/diagrams/rhz-chocolate-bars
