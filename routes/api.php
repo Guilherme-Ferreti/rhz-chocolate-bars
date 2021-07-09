@@ -17,7 +17,9 @@ use App\Http\Controllers\ConsultationController;
 |
 */
 
-Route::apiResource('cocoa-batches', CocoaBatchController::class);
-Route::apiResource('chocolate-bars', ChocolateBarController::class);
+Route::group(['middleware' => 'auth.basic.token'], function () {
+    Route::apiResource('cocoa-batches', CocoaBatchController::class);
+    Route::apiResource('chocolate-bars', ChocolateBarController::class);
+});
 
 Route::get('/consultation/chocolate-bars/{code}', [ConsultationController::class, 'chocolate_bar']);
