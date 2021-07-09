@@ -17,7 +17,7 @@ class ChocolateBarTest extends TestCase
     {
         $this->seed();
 
-        $response = $this->get(route('chocolate-bars.index'));
+        $response = $this->get(route('chocolate-bars.index'), $this->headers());
         
         $response->assertOk();
 
@@ -30,7 +30,7 @@ class ChocolateBarTest extends TestCase
 
         $chocolate_bar = ChocolateBar::with('cocoa_batches')->inRandomOrder()->first()->toArray();
 
-        $response = $this->get(route('chocolate-bars.show', $chocolate_bar['id']));
+        $response = $this->get(route('chocolate-bars.show', $chocolate_bar['id']), $this->headers());
 
         $response->assertOk();
         $response->assertJson(['data' => $chocolate_bar]);
@@ -49,7 +49,7 @@ class ChocolateBarTest extends TestCase
             ]
         ];
 
-        $response = $this->postJson(route('chocolate-bars.store'), $payload);
+        $response = $this->postJson(route('chocolate-bars.store'), $payload, $this->headers());
 
         $response->assertCreated();
         $response->assertJson(['data' => ChocolateBar::with('cocoa_batches')->first()->toArray()]);
@@ -70,7 +70,7 @@ class ChocolateBarTest extends TestCase
             ]
         ];
 
-        $response = $this->putJson(route('chocolate-bars.update', ChocolateBar::first()), $payload);
+        $response = $this->putJson(route('chocolate-bars.update', ChocolateBar::first()), $payload, $this->headers());
 
         $response->assertOk();
 
@@ -85,7 +85,7 @@ class ChocolateBarTest extends TestCase
 
         $chocolate_bar = ChocolateBar::first();
 
-        $response = $this->deleteJson(route('chocolate-bars.destroy', $chocolate_bar));
+        $response = $this->deleteJson(route('chocolate-bars.destroy', $chocolate_bar), [], $this->headers());
 
         $response->assertNoContent();
 
@@ -101,5 +101,12 @@ class ChocolateBarTest extends TestCase
                             ['origin' => CocoaBatch::ORIGINS['preprocessed']],
                         ))
                         ->create();
+    }
+
+    private function headers() : array
+    {
+        return [
+            'X-Auth-Token' => config('app.api_auth_token'),
+        ];
     }
 }

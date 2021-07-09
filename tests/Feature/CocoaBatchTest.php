@@ -18,7 +18,7 @@ class CocoaBatchTest extends TestCase
 
         $cocoa_batches = CocoaBatch::with('chocolate_bars')->take(15)->get()->toArray();
 
-        $response = $this->get(route('cocoa-batches.index'));
+        $response = $this->get(route('cocoa-batches.index'), $this->headers());
 
         $response->assertOk();
         $response->assertJson(['data' => $cocoa_batches]);
@@ -30,7 +30,7 @@ class CocoaBatchTest extends TestCase
 
         $cocoa_batch = CocoaBatch::with('chocolate_bars')->inRandomOrder()->first()->toArray();
 
-        $response = $this->get(route('cocoa-batches.show', $cocoa_batch['id']));
+        $response = $this->get(route('cocoa-batches.show', $cocoa_batch['id']), $this->headers());
 
         $response->assertOk();
         $response->assertJson(['data' => $cocoa_batch]);
@@ -40,7 +40,7 @@ class CocoaBatchTest extends TestCase
     {
         $cocoa_batch = CocoaBatch::factory()->make()->toArray();
 
-        $response = $this->postJson(route('cocoa-batches.store'), $cocoa_batch);
+        $response = $this->postJson(route('cocoa-batches.store'), $cocoa_batch, $this->headers());
 
         $response->assertCreated();
         $response->assertJson(['data' => $cocoa_batch]);
@@ -56,7 +56,7 @@ class CocoaBatchTest extends TestCase
 
         $cocoa_batch['description'] = 'Updated description';
 
-        $response = $this->putJson(route('cocoa-batches.update', $cocoa_batch['id']), $cocoa_batch);
+        $response = $this->putJson(route('cocoa-batches.update', $cocoa_batch['id']), $cocoa_batch, $this->headers());
 
         $response->assertOk();
         $response->assertJson(['data' => $cocoa_batch]);
@@ -72,10 +72,17 @@ class CocoaBatchTest extends TestCase
 
         $cocoa_batch = CocoaBatch::inRandomOrder()->first();
 
-        $response = $this->delete(route('cocoa-batches.destroy', $cocoa_batch));
+        $response = $this->delete(route('cocoa-batches.destroy', $cocoa_batch), [],$this->headers());
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
 
         $this->assertDeleted($cocoa_batch);
+    }
+
+    private function headers() : array
+    {
+        return [
+            'X-Auth-Token' => config('app.api_auth_token'),
+        ];
     }
 }
