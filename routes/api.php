@@ -22,4 +22,4 @@ Route::group(['middleware' => 'auth.basic.token'], function () {
     Route::apiResource('chocolate-bars', ChocolateBarController::class);
 });
 
-Route::get('/consultation/chocolate-bars/{code}', [ConsultationController::class, 'chocolate_bar']);
+Route::get('/consultation/chocolate-bars/{chocolate_bar:code}', [ConsultationController::class, 'chocolate_bar']);
